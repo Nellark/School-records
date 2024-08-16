@@ -1,25 +1,18 @@
 const express = require('express');
-const mysql = require('mysql2/promise');
 const app = express();
+const learnersRouter = require('./routes/learnersRoute');
+const teachersRouter = require('./routes/teachersRoute');
+
+
 app.use(express.json());
 
-const { createPool } = require('mysql2');
-const pool = createPool({
-        host: 'localhost',
-        user: 'root',
-        password: 'Letsdoit!',
-        database: 'School_Magement'
-    });
-    module.exports = pool;
-
-
-
-
+app.use('/learners', learnersRouter);
+app.use('/teachers', teachersRouter);
 
 
 
 
 
 app.listen(3000, () => {
-    console.log('Server running on port 3000');
+    console.log('Server is running on port 3000');
 });
