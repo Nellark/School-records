@@ -30,7 +30,7 @@ const createLearner = async (req, res) => {
         return res.status(400).send('Missing fields');
     }
     try {
-        const [existingId] = await pool.query('SELECT 1 FROM LEARNERS WHERE ID = ?', [id]);
+        const [existingId] = await pool.query('SELECT 1 FROM LEARNERS WHERE ID = ?', [ID]);
         if (existingId.length > 0) return res.status(409).send('ID already exists');
     
         const result = await pool.query(
