@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>School Management System</h1>
+
+        <section>
+            <h2>Manage Learners</h2>
+            <form id="learner-form">
+                <input type="text" id="learner-id" placeholder="ID">
+                <input type="text" id="learner-name" placeholder="Name">
+                <input type="text" id="learner-surname" placeholder="Surname">
+                <input type="text" id="learner-grade" placeholder="Grade">
+                <input type="text" id="learner-class" placeholder="Class">
+                <button type="submit">Add/Update Learner</button>
+            </form>
+            <button id="fetch-learners">Display All Learners</button>
+            <form id="search-learner-form">
+                <input type="text" id="search-learner-id" placeholder="Search Learner by ID">
+                <button type="submit">Search Learner</button>
+            </form>
+            <table id="learners-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Grade</th>
+                        <th>Class</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+
+     
+        <section>
+            <h2>Manage Teachers</h2>
+            <form id="teacher-form">
+                <input type="text" id="teacher-persal" placeholder="Persal">
+                <input type="text" id="teacher-title" placeholder="Title">
+                <input type="text" id="teacher-initial" placeholder="Initial">
+                <input type="text" id="teacher-surname" placeholder="Surname">
+                <input type="text" id="teacher-department" placeholder="Department">
+                <input type="email" id="teacher-email" placeholder="Email">
+                <input type="text" id="teacher-qualification" placeholder="Qualification">
+                <input type="date" id="teacher-startdate" placeholder="Start Date">
+                <button type="submit">Add/Update Teacher</button>
+            </form>
+            <button id="fetch-teachers">Display All Teachers</button>
+            <form id="search-teacher-form">
+                <input type="text" id="search-teacher-persal" placeholder="Search Teacher by Persal">
+                <button type="submit">Search Teacher</button>
+            </form>
+            <table id="teachers-table">
+                <thead>
+                    <tr>
+                        <th>Persal</th>
+                        <th>Title</th>
+                        <th>Initial</th>
+                        <th>Surname</th>
+                        <th>Department</th>
+                        <th>Email</th>
+                        <th>Qualification</th>
+                        <th>Start Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
