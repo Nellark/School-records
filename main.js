@@ -5,13 +5,9 @@ const cors = require('cors');
 
 
 app.use(cors()); 
-
-
 app.use(express.json());
 
-
 app.use('/teacher', teachersRouter);
-
 
 app.use((err, req, res, next) => {
     console.error(err.stack);

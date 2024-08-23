@@ -1,27 +1,44 @@
-let teachers = [];
+// Select elements from the DOM
+const teacherForm = document.getElementById("teacher-form");
+const teacherTable = document.getElementById("teachers-table").querySelector("tbody");
+const fetchTeachersButton = document.getElementById("fetch-teachers");
+const searchTeacherForm = document.getElementById("search-teacher-form");
 
+let editingTeacher = null; // Track the teacher being edited
 
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('teacher-form').onsubmit = addOrUpdateTeacher;
-    document.getElementById('fetch-teachers').addEventListener('click', fetchTeachers);
-    document.getElementById('search-teacher-form').onsubmit = searchTeacher;
-    fetchTeachers();
-});
-
-
+// Fetch and display teachers
 async function fetchTeachers() {
     try {
-        const response = await fetch('http://localhost:3000/teacher');
+        const response = await fetch("http://localhost:3000/teacher");
         if (!response.ok) throw new Error(`Network response was not ok: ${response.statusText}`);
-        teachers = await response.json();
-        updateTeacherTable();
+        const teachers = await response.json();
+        updateTeacherTable(teachers);
     } catch (error) {
         console.error('Fetch error:', error);
-        alert(`An error occurred while fetching data: ${error.message}`);
+        alert(`An error occurred while fetching teachers: ${error.message}`);
     }
 }
 
+// Update the teacher table
+function updateTeacherTable(teachers) {
+    teacherTable.innerHTML = '';
+    teachers.forEach(teacher => {
+        const row = teacherTable.insertRow();
+        row.insertCell(0).textContent = teacher.PERSAL;
+        row.insertCell(1).textContent = teacher.TITLE;
+        row.insertCell(2).textContent = teacher.INITIAL;
+        row.insertCell(3).textContent = teacher.SURNAME;
+        row.insertCell(4).textContent = teacher.DEPARTMENT;
+        row.insertCell(5).textContent = teacher.EMAIL;
+        const actionCell = row.insertCell(6);
+        actionCell.innerHTML = `
+            <button onclick="startEditingTeacher('${teacher.PERSAL}')">Edit</button>
+            <button onclick="deleteTeacher('${teacher.PERSAL}')">Delete</button>
+        `;
+    });
+}
 
+// Handle form submission for adding or updating a teacher
 async function addOrUpdateTeacher(event) {
     event.preventDefault();
 
@@ -40,38 +57,53 @@ async function addOrUpdateTeacher(event) {
     const teacherData = { TITLE: title, INITIAL: initial, SURNAME: surname, DEPARTMENT: department, EMAIL: email };
 
     try {
-        const response = await fetch(`http://localhost:3000/teacher/${persal}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(teacherData),
-        });
-
-        if (response.status === 404) {
-            
-            await fetch('http://localhost:3000/teacher', {
+        let response;
+        if (editingTeacher) {
+            response = await fetch(`http://localhost:3000/teacher/${editingTeacher}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(teacherData),
+            });
+            if (response.ok) {
+                alert('Teacher updated successfully');
+            } else {
+                throw new Error(`Failed to update teacher: ${response.statusText}`);
+            }
+        } else {
+            response = await fetch('http://localhost:3000/teacher', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ PERSAL: persal, ...teacherData }),
             });
+            if (response.ok) {
+                alert('Teacher added successfully');
+            } else {
+                throw new Error(`Failed to create teacher: ${response.statusText}`);
+            }
         }
-
-        fetchTeachers(); 
         resetTeacherForm();
+        fetchTeachers();
     } catch (error) {
         console.error('Fetch error:', error);
         alert(`An error occurred while saving data: ${error.message}`);
     }
 }
 
-
+// Handle teacher deletion
 async function deleteTeacher(persal) {
     if (!confirm('Are you sure you want to delete this teacher?')) return;
 
     try {
-        await fetch(`http://localhost:3000/teacher/${persal}`, {
+        const response = await fetch(`http://localhost:3000/teacher/${persal}`, {
             method: 'DELETE',
         });
-        fetchTeachers(); 
+
+        if (response.ok) {
+            alert('Teacher deleted successfully');
+            fetchTeachers();
+        } else {
+            throw new Error(`Failed to delete teacher: ${response.statusText}`);
+        }
     } catch (error) {
         console.error('Fetch error:', error);
         alert(`An error occurred while deleting data: ${error.message}`);
@@ -80,46 +112,34 @@ async function deleteTeacher(persal) {
 
 
 function startEditingTeacher(persal) {
-    const teacher = teachers.find(t => t.PERSAL === persal);
+    fetch(`http://localhost:3000/teacher/${persal}`)
+        .then(response => response.json())
+        .then(teacher => {
+            document.getElementById('teacher-persal').value = teacher.PERSAL;
+            document.getElementById('teacher-title').value = teacher.TITLE;
+            document.getElementById('teacher-initial').value = teacher.INITIAL;
+            document.getElementById('teacher-surname').value = teacher.SURNAME;
+            document.getElementById('teacher-department').value = teacher.DEPARTMENT;
+            document.getElementById('teacher-email').value = teacher.EMAIL;
 
-    if (teacher) {
-        document.getElementById('teacher-persal').value = teacher.PERSAL;
-        document.getElementById('teacher-title').value = teacher.TITLE;
-        document.getElementById('teacher-initial').value = teacher.INITIAL;
-        document.getElementById('teacher-surname').value = teacher.SURNAME;
-        document.getElementById('teacher-department').value = teacher.DEPARTMENT;
-        document.getElementById('teacher-email').value = teacher.EMAIL;
-    }
-}
+            editingTeacher = teacher.PERSAL;
+            document.getElementById('teacher-form').style.display = 'block';
 
-
-function updateTeacherTable() {
-    const tableBody = document.getElementById('teachers-table').getElementsByTagName('tbody')[0];
-    tableBody.innerHTML = '';
-
-    teachers.forEach((teacher) => {
-        const row = tableBody.insertRow();
-        row.insertCell(0).textContent = teacher.PERSAL;
-        row.insertCell(1).textContent = teacher.TITLE;
-        row.insertCell(2).textContent = teacher.INITIAL;
-        row.insertCell(3).textContent = teacher.SURNAME;
-        row.insertCell(4).textContent = teacher.DEPARTMENT;
-        row.insertCell(5).textContent = teacher.EMAIL;
-        const actionCell = row.insertCell(6);
-        actionCell.innerHTML = `
-            <button onclick="startEditingTeacher('${teacher.PERSAL}')">Edit</button>
-            <button onclick="deleteTeacher('${teacher.PERSAL}')">Delete</button>
-        `;
-    });
+        
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+            alert(`An error occurred while fetching teacher data: ${error.message}`);
+        });
 }
 
 
 function resetTeacherForm() {
     document.getElementById('teacher-form').reset();
-    document.getElementById('teacher-persal').focus();
+    document.getElementById('Add-teachers').textContent = 'Add/Update';
+    editingTeacher = null; 
 }
 
-app.use(cors());
 
 async function searchTeacher(event) {
     event.preventDefault();
@@ -131,10 +151,17 @@ async function searchTeacher(event) {
         const response = await fetch(`http://localhost:3000/teacher/${persal}`);
         if (!response.ok) throw new Error(`Network response was not ok: ${response.statusText}`);
         const teacher = await response.json();
-        teachers = [teacher];
-        updateTeacherTable();
+        updateTeacherTable([teacher]);
     } catch (error) {
         console.error('Fetch error:', error);
         alert(`Teacher not found or an error occurred: ${error.message}`);
     }
 }
+
+
+teacherForm.addEventListener('submit', addOrUpdateTeacher);
+fetchTeachersButton.addEventListener('click', fetchTeachers);
+searchTeacherForm.addEventListener('submit', searchTeacher);
+
+
+fetchTeachers();
