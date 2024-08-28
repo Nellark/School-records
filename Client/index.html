@@ -17,7 +17,7 @@
         
         <h3>Add or Update Teacher</h3>
         <form id="teacher-form">
-            <input type="text" id="teacher-persal" placeholder="PERSAL" required>
+            <input type="text" id="teacher-persal" class="hidden" placeholder="PERSAL" required>
             <input type="text" id="teacher-title" placeholder="Title" required>
             <input type="text" id="teacher-initial" placeholder="Initial" required>
             <input type="text" id="teacher-surname" placeholder="Surname" required>
@@ -26,6 +26,7 @@
            
             <button type="button" id="fetch-teachers">Fetch All Teachers</button>
             <button type="submit" id="Add-teachers">Add/Update Teacher</button>
+            <button type="button" id="toggle-persal">Toggle PERSAL Field</button>
         </form>
 
         <table id="teachers-table">

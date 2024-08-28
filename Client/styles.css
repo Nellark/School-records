@@ -1,7 +1,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background: black;
+    background: rgb(33, 33, 33);
     color: #333;
 }
 
@@ -16,7 +16,7 @@ body {
 
 h1, h3{
     text-align: center;
-    color: #333;
+    color: #191818;
     margin-bottom: 20px;
 }
 
@@ -44,7 +44,7 @@ table {
 }
 
 table th {
-    background-color: #413f3e;
+    background-color: #1e1e1e;
     color: #e4e2e2;
     padding: 10px;
     border: 1px solid;
@@ -59,7 +59,7 @@ table td {
 
 
 button {
-    background: linear-gradient( #302e2d, #ada8a4);
+    background: linear-gradient( #080808, #686767);
     border: none;
     border-radius: 5px;
     color: white;
@@ -70,5 +70,10 @@ button {
 }
 
 button:hover {
-    background: black;
+    background: rgb(24, 24, 24);
+}
+
+#teachers-table th:nth-child(1),
+#teachers-table td:nth-child(1) {
+    display: none;
 }

@@ -1,12 +1,12 @@
-// Select elements from the DOM
 const teacherForm = document.getElementById("teacher-form");
 const teacherTable = document.getElementById("teachers-table").querySelector("tbody");
 const fetchTeachersButton = document.getElementById("fetch-teachers");
 const searchTeacherForm = document.getElementById("search-teacher-form");
+const toggleButton = document.getElementById('toggle-persal');
+const persalInput = document.getElementById('teacher-persal');
 
-let editingTeacher = null; // Track the teacher being edited
+let editingTeacher = null;
 
-// Fetch and display teachers
 async function fetchTeachers() {
     try {
         const response = await fetch("http://localhost:3000/teacher");
@@ -19,12 +19,11 @@ async function fetchTeachers() {
     }
 }
 
-// Update the teacher table
 function updateTeacherTable(teachers) {
     teacherTable.innerHTML = '';
     teachers.forEach(teacher => {
         const row = teacherTable.insertRow();
-        row.insertCell(0).textContent = teacher.PERSAL;
+        row.insertCell(0).textContent = teacher.PERSAL; 
         row.insertCell(1).textContent = teacher.TITLE;
         row.insertCell(2).textContent = teacher.INITIAL;
         row.insertCell(3).textContent = teacher.SURNAME;
@@ -38,7 +37,6 @@ function updateTeacherTable(teachers) {
     });
 }
 
-// Handle form submission for adding or updating a teacher
 async function addOrUpdateTeacher(event) {
     event.preventDefault();
 
@@ -49,7 +47,7 @@ async function addOrUpdateTeacher(event) {
     const department = document.getElementById('teacher-department').value.trim();
     const email = document.getElementById('teacher-email').value.trim();
 
-    if (!persal || !title || !initial || !surname || !department || !email) {
+    if (!title || !initial || !surname || !department || !email) {
         alert('Please fill in all fields.');
         return;
     }
@@ -89,7 +87,6 @@ async function addOrUpdateTeacher(event) {
     }
 }
 
-// Handle teacher deletion
 async function deleteTeacher(persal) {
     if (!confirm('Are you sure you want to delete this teacher?')) return;
 
@@ -110,7 +107,6 @@ async function deleteTeacher(persal) {
     }
 }
 
-
 function startEditingTeacher(persal) {
     fetch(`http://localhost:3000/teacher/${persal}`)
         .then(response => response.json())
@@ -124,8 +120,6 @@ function startEditingTeacher(persal) {
 
             editingTeacher = teacher.PERSAL;
             document.getElementById('teacher-form').style.display = 'block';
-
-        
         })
         .catch(error => {
             console.error('Fetch error:', error);
@@ -133,13 +127,11 @@ function startEditingTeacher(persal) {
         });
 }
 
-
 function resetTeacherForm() {
-    document.getElementById('teacher-form').reset();
+    teacherForm.reset();
     document.getElementById('Add-teachers').textContent = 'Add/Update';
     editingTeacher = null; 
 }
-
 
 async function searchTeacher(event) {
     event.preventDefault();
@@ -158,10 +150,20 @@ async function searchTeacher(event) {
     }
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+    if (persalInput) {
+        persalInput.style.display = 'none';
+    }
+
+    if (toggleButton) {
+        toggleButton.addEventListener('click', () => {
+            persalInput.style.display = (persalInput.style.display === 'none') ? 'block' : 'none';
+        });
+    }
+});
 
 teacherForm.addEventListener('submit', addOrUpdateTeacher);
 fetchTeachersButton.addEventListener('click', fetchTeachers);
 searchTeacherForm.addEventListener('submit', searchTeacher);
-
 
 fetchTeachers();
