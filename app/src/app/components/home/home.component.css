@@ -1,0 +1,196 @@
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #a46f61,#edc0f7, #f7bb8d);
+    color: #333;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #9f7064;
+    margin-top: 0;
+    border-bottom: 2px solid #9f7064;
+    padding-bottom: 10px;
+}
+
+
+form {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+form input {
+    flex: auto;
+    border: 2px solid #f3d8d8;
+    border-radius: 4px;
+    padding: 10px;
+    margin: 10px 10px;
+    
+}
+
+
+
+table {
+    width: 100%;
+    margin-top: 20px;
+}
+
+table th {
+    background-color: #a77366;
+    color: rgb(255, 255, 255);
+    padding: 10px;
+    border: 1px solid;
+    text-align: left;
+}
+
+table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+
+button {
+    background: linear-gradient( #b1796b, #feb47b);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 10px 20px;
+    margin: 10px 10px;
+}
+
+button:hover {
+    background: linear-gradient( #f9d9c2, #ffbbb5);
+}
+
+
+/* Make the buttons smaller */
+.icon-btn {
+  font-size: 16px;
+  padding: 4px 8px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Buttons aligned to the far right */
+.action-btns {
+  text-align: right;
+}
+
+/* Small icons */
+.icon-btn i {
+  font-size: 18px; /* Small icon size */
+}
+
+/* Styling for the calendar to disable future dates */
+input[type="date"] {
+  pointer-events: none;
+}
+
+/* Restrict date to previous dates only */
+input[type="date"]:not([min]):not([disabled]) {
+  background-color: #f0f0f0; /* Grayed out background */
+}
+
+
+/* Make the buttons smaller */
+.icon-btn {
+  font-size: 16px;
+  padding: 4px 8px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Buttons aligned to the far right */
+.action-btns {
+  text-align: right;
+}
+
+/* Small icons */
+.icon-btn i {
+  font-size: 18px; /* Small icon size */
+}
+
+/* Styling for the calendar to disable future dates */
+input[type="date"] {
+  pointer-events: none;
+}
+
+/* Restrict date to previous dates only */
+input[type="date"]:not([min]):not([disabled]) {
+  background-color: #f0f0f0; /* Grayed out background */
+}
+
+
+
+
+/* Style for action buttons */
+.icon-btn {
+    font-size: 16px;
+    padding: 8px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    color: #000;
+  }
+  
+  /* Buttons aligned to the far right */
+  .action-btns {
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  /* Small icons */
+  .icon-btn i {
+    font-size: 18px; /* Small icon size */
+    color: #010101;  /* Blue color for icons */
+  }
+  
+  /* Hover effect for icons */
+  .icon-btn:hover i {
+    color: #282829;  /* Darker blue when hovered */
+  }
+  
+
+
+
+
+
+
+
+
+
+
+
+  

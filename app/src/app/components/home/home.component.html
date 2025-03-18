@@ -1,0 +1,112 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<div class="container">
+  <h1>School Management System</h1>
+
+  <!-- Learners Section -->
+  <section>
+    <h2>Manage Learners</h2>
+    <form (ngSubmit)="addOrUpdateLearner(learnerFormData)">
+      <input type="text" [(ngModel)]="learnerFormData.id" name="id" placeholder="ID" required>
+      <input type="text" [(ngModel)]="learnerFormData.name" name="name" placeholder="Name" required>
+      <input type="text" [(ngModel)]="learnerFormData.surname" name="surname" placeholder="Surname" required>
+      <input type="text" [(ngModel)]="learnerFormData.grade" name="grade" placeholder="Grade" required>
+      <input type="text" [(ngModel)]="learnerFormData.class" name="class" placeholder="Class" required>
+      <button type="submit">Add/Update Learner</button>
+    </form>
+
+    <button (click)="displayLearners()">Display All Learners</button>
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Surname</th>
+          <th>Grade</th>
+          <th>Class</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let learner of learners">
+          <td>{{ learner.id }}</td>
+          <td>{{ learner.name }}</td>
+          <td>{{ learner.surname }}</td>
+          <td>{{ learner.grade }}</td>
+          <td>{{ learner.class }}</td>
+          <td class="action-btns">
+            <button class="icon-btn" (click)="editLearner(learner)">
+              <i class="fa fa-edit"></i> <!-- FontAwesome Edit Icon -->
+            </button>
+            <button class="icon-btn" (click)="deleteLearner(learner.id)">
+              <i class="fa fa-trash"></i> <!-- FontAwesome Delete Icon -->
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Teachers Section -->
+  <section>
+    <h2>Manage Teachers</h2>
+    <form (ngSubmit)="addOrUpdateTeacher(teacherFormData)">
+      <input type="text" [(ngModel)]="teacherFormData.persal" name="persal" placeholder="Persal" required>
+      <input type="text" [(ngModel)]="teacherFormData.title" name="title" placeholder="Title" required>
+      <input type="text" [(ngModel)]="teacherFormData.initial" name="initial" placeholder="Initial" required>
+      <input type="text" [(ngModel)]="teacherFormData.surname" name="surname" placeholder="Surname" required>
+      <input type="text" [(ngModel)]="teacherFormData.department" name="department" placeholder="Department" required>
+      <input type="email" [(ngModel)]="teacherFormData.email" name="email" placeholder="Email" required>
+      <input type="text" [(ngModel)]="teacherFormData.qualification" name="qualification" placeholder="Qualification" required>
+      <input type="date" [(ngModel)]="teacherFormData.startDate" name="startDate" [attr.max]="currentDate" required>
+      <button type="submit">Add/Update Teacher</button>
+    </form>
+  
+    <button (click)="displayTeachers()">Display All Teachers</button>
+  
+
+    <form (ngSubmit)="searchTeacher()">
+      <input [(ngModel)]="teacherPersal" name="search-teacher-persal" placeholder="Search Teacher by Persal" required>
+      <button type="submit">Search Teacher</button>
+    </form>
+  
+
+    <table>
+      <thead>
+        <tr>
+          <th>Persal</th>
+          <th>Title</th>
+          <th>Initial</th>
+          <th>Surname</th>
+          <th>Department</th>
+          <th>Email</th>
+          <th>Qualification</th>
+          <th>Start Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let teacher of filteredTeachers">
+          <td>{{ teacher.persal }}</td>
+          <td>{{ teacher.title }}</td>
+          <td>{{ teacher.initial }}</td>
+          <td>{{ teacher.surname }}</td>
+          <td>{{ teacher.department }}</td>
+          <td>{{ teacher.email }}</td>
+          <td>{{ teacher.qualification }}</td>
+          <td>{{ teacher.startDate }}</td>
+          <td class="action-btns">
+            <button class="icon-btn" (click)="editTeacher(teacher)">
+              <i class="fa fa-edit"></i> <!-- FontAwesome Edit Icon -->
+            </button>
+            <button class="icon-btn" (click)="deleteTeacher(teacher.persal)">
+              <i class="fa fa-trash"></i> <!-- FontAwesome Delete Icon -->
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  
+</div>
